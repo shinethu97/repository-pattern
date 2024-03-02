@@ -6,7 +6,7 @@ var router = express.Router()
 router.get('/:id', userController.get)
 router.get('/', userController.all)
 router.post('/', userController.add)
-router.patch('/:id', userController.patch)
+router.patch('/:id', userController.update)
 router.delete('/:id', userController.drop)
 
 export default router
