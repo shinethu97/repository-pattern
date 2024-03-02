@@ -23,6 +23,11 @@ class UserRepository {
 
     return { user }
   }
+
+  static async drop(params) {
+    await userDB.findByIdAndDelete(params)
+    return
+  }
   /**
    ------------------- Functions -------------------
    -------------------------------------------------
