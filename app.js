@@ -13,6 +13,8 @@ const __dirname = path.dirname(__filename)
 
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
+import { CustomError } from './src/util'
+import { ERR } from './src/constants/error'
 
 var app = express()
 mongoose
@@ -49,14 +51,23 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get('env') === 'development' ? err : {}
+  let message = ERR.INTERNAL,
+    status = 500,
+    con = false,
+    body = null,
+    error = []
 
-  // render the error page
-  res.status(err.status || 500)
-  res.send(err)
-  // res.render('error')
+  if (err instanceof CustomError) {
+    message = err.message
+    status = err.status
+    error = err.error || []
+  }
+  res.status(status).json({
+    con: con,
+    message: message,
+    error: error,
+    body: body,
+  })
 })
 
 export default app
