@@ -1,5 +1,7 @@
+import { ERR } from '../constants/error'
 import userDB from '../models/user'
 import UserRepository from '../repositories/user'
+import { CustomError } from '../util'
 import UserValidation from '../validation/user'
 
 export const all = async (req, res, next) => {
@@ -16,7 +18,7 @@ export const get = async (req, res, next) => {
     /** Validation */
     const error = UserValidation.getById({ user_id: req.params.id })
 
-    if (error) return next(error)
+    if (error) throw new CustomError(ERR.VALIDATION, 400, error)
 
     const user = await UserRepository.getById(req.params.id)
 

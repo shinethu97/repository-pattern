@@ -1,6 +1,11 @@
+/** model */
 import userDB from '../models/user'
 
-class UserRepository {
+/** common */
+import Abstract from './base'
+import { MSG } from '../constants/message'
+
+class UserRepository extends Abstract {
   static async all() {
     const users = await userDB.find()
     return { users }
@@ -8,6 +13,11 @@ class UserRepository {
 
   static async getById(id) {
     const user = await userDB.findById(id)
+
+    // if (!user) throw createError(404, "User Not Found!")
+    // if (!user) throw new CustomError("User Not Found", 404, null)
+    if (!user) super.throwCustomError(null, MSG.USER_NOT_FOUND, 404)
+
     return { user }
   }
 
