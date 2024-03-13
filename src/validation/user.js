@@ -28,8 +28,7 @@ class UserValidation {
       password: Joi.string().required(),
       email: Joi.string().email().required(),
     })
-    const { error, ...v } = schema.validate(params)
-    console.log(v)
+    const { error } = schema.validate(params)
     if (error) return Array.from(error.details, (r) => r.message)
 
     return

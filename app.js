@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename)
 
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
+import languageRouter from './routes/language'
 import { CustomError } from './src/util'
 import { ERR } from './src/constants/error'
 
@@ -43,6 +44,7 @@ dotenv.config()
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/language', languageRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -56,7 +58,8 @@ app.use(function (err, req, res, next) {
     con = false,
     body = null,
     error = []
-
+  console.log('Error****')
+  console.log(err)
   if (err instanceof CustomError) {
     message = err.message
     status = err.status
